@@ -1,6 +1,6 @@
 # Work-Matters-and-Materials-of-the-Project-Department
 
-##### <center>项目部工作事宜及资料<center>
+**项目部工作事宜及资料**
 
 欢迎大家来到院青协项目部Github库！具体内容请看各个分支~
 
