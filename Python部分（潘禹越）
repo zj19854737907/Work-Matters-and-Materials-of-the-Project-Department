@@ -1,0 +1,232 @@
+# book_management.py
+import os
+
+class BookManager:
+    def __init__(self, filename="books.txt"):
+        self.filename = filename
+        self.books = []
+
+    # 模块1：数据文件初始化与读取
+    def initialize_file(self):
+        """初始化图书信息文件"""
+        try:
+            # 如果文件不存在，创建并初始化一些示例数据
+            if not os.path.exists(self.filename):
+                with open(self.filename, 'w', encoding='utf-8') as f:
+                    sample_books = [
+                        "Python编程从入门到实践,埃里克·马瑟斯,2016,0",
+                        "机器学习,周志华,2016,1",
+                        "深度学习,伊恩·古德费洛,2016,0",
+                        "数据结构与算法,严蔚敏,1997,1",
+                        "C程序设计语言,丹尼斯·里奇,1978,0"
+                    ]
+                    f.write('\n'.join(sample_books))
+                print(f"已初始化文件 {self.filename} 并添加了示例数据")
+            else:
+                print(f"文件 {self.filename} 已存在")
+        except Exception as e:
+            print(f"初始化文件时出错: {e}")
+
+    def read_books(self):
+        """读取图书信息到程序中"""
+        try:
+            with open(self.filename, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+
+            self.books = []
+            for line_num, line in enumerate(lines, 1):
+                line = line.strip()
+                if line:  # 跳过空行
+                    try:
+                        # 使用split分割字段
+                        parts = line.split(',')
+                        if len(parts) == 4:
+                            title, author, year, status = parts
+                            book = {
+                                'title': title,
+                                'author': author,
+                                'year': int(year),
+                                'status': int(status),  # 0:可借, 1:已借出
+                                'line_num': line_num
+                            }
+                            self.books.append(book)
+                        else:
+                            print(f"警告: 第{line_num}行格式不正确: {line}")
+                    except ValueError as e:
+                        print(f"警告: 第{line_num}行数据转换错误: {e}")
+
+            print(f"成功读取 {len(self.books)} 本图书信息")
+            return self.books
+
+        except FileNotFoundError:
+            print(f"错误: 文件 {self.filename} 不存在，请先初始化")
+            return []
+        except Exception as e:
+            print(f"读取文件时出错: {e}")
+            return []
+
+    def save_books(self):
+        """将图书信息保存回文件"""
+        try:
+            with open(self.filename, 'w', encoding='utf-8') as f:
+                for book in self.books:
+                    # 使用join组合数据
+                    line = ','.join([
+                        book['title'],
+                        book['author'],
+                        str(book['year']),
+                        str(book['status'])
+                    ])
+                    f.write(line + '\n')
+            print(f"成功保存 {len(self.books)} 本图书信息到文件")
+        except Exception as e:
+            print(f"保存文件时出错: {e}")
+
+    def add_book(self, title, author, year):
+        """添加新图书"""
+        new_book = {
+            'title': title,
+            'author': author,
+            'year': year,
+            'status': 0,  # 默认可借
+            'line_num': len(self.books) + 1
+        }
+        self.books.append(new_book)
+        print(f"成功添加图书: {title}")
+
+    def borrow_book(self, book_index):
+        """借阅图书"""
+        if 0 <= book_index < len(self.books):
+            if self.books[book_index]['status'] == 0:
+                self.books[book_index]['status'] = 1
+                print(f"成功借阅: {self.books[book_index]['title']}")
+                return True
+            else:
+                print("该图书已被借出")
+                return False
+        else:
+            print("图书索引无效")
+            return False
+
+    def return_book(self, book_index):
+        """归还图书"""
+        if 0 <= book_index < len(self.books):
+            if self.books[book_index]['status'] == 1:
+                self.books[book_index]['status'] = 0
+                print(f"成功归还: {self.books[book_index]['title']}")
+                return True
+            else:
+                print("该图书未被借出")
+                return False
+        else:
+            print("图书索引无效")
+            return False
+
+    # 模块2：图书信息统计分析
+    def generate_statistics_report(self):
+        """生成图书信息统计报告"""
+        if not self.books:
+            print("没有图书数据可供统计")
+            return
+
+        # 统计总数量
+        total_books = len(self.books)
+
+        # 统计可借与已借出数量
+        available_books = sum(1 for book in self.books if book['status'] == 0)
+        borrowed_books = sum(1 for book in self.books if book['status'] == 1)
+
+        # 统计出版年份相关信息
+        years = [book['year'] for book in self.books]
+        avg_year = sum(years) / len(years) if years else 0
+        oldest_year = min(years) if years else 0
+        newest_year = max(years) if years else 0
+
+        # 输出统计报告
+        print("\n" + "="*50)
+        print("           图书信息统计报告")
+        print("="*50)
+        print(f"图书总数量: {total_books} 本")
+        print(f"可借图书数量: {available_books} 本")
+        print(f"已借出图书数量: {borrowed_books} 本")
+        print(f"借出率: {borrowed_books/total_books*100:.1f}%")
+        print(f"平均出版年份: {avg_year:.1f} 年")
+        print(f"最早出版年份: {oldest_year} 年")
+        print(f"最新出版年份: {newest_year} 年")
+        print("="*50)
+
+        # 按出版年份统计
+        print("\n按出版年份统计:")
+        year_counts = {}
+        for book in self.books:
+            year = book['year']
+            year_counts[year] = year_counts.get(year, 0) + 1
+
+        for year, count in sorted(year_counts.items()):
+            print(f"  {year}年: {count}本")
+
+    def display_books(self):
+        """显示所有图书信息"""
+        if not self.books:
+            print("暂无图书信息")
+            return
+
+        print("\n当前图书列表:")
+        print("-" * 80)
+        print(f"{'序号':<4} {'书名':<20} {'作者':<15} {'年份':<6} {'状态':<8}")
+        print("-" * 80)
+
+        for i, book in enumerate(self.books):
+            status_text = "可借" if book['status'] == 0 else "已借出"
+            print(f"{i:<4} {book['title']:<20} {book['author']:<15} {book['year']:<6} {status_text:<8}")
+
+def main():
+    """主函数 - 演示两个模块的功能"""
+    manager = BookManager()
+
+    print("="*50)
+    print("       图书管理系统 - Python模块演示")
+    print("="*50)
+
+    # 模块1演示：数据文件初始化与读取
+    print("\n[模块1] 数据文件初始化与读取")
+    print("-" * 30)
+
+    # 初始化文件
+    manager.initialize_file()
+
+    # 读取图书信息
+    books = manager.read_books()
+
+    # 显示读取的图书
+    manager.display_books()
+
+    # 模块2演示：图书信息统计分析
+    print("\n[模块2] 图书信息统计分析")
+    print("-" * 30)
+
+    # 生成统计报告
+    manager.generate_statistics_report()
+
+    # 演示添加新图书
+    print("\n[功能演示] 添加新图书")
+    print("-" * 30)
+    manager.add_book("流畅的Python", "卢西亚诺·拉马略", 2017)
+
+    # 演示借阅图书
+    print("\n[功能演示] 借阅图书")
+    print("-" * 30)
+    manager.borrow_book(0)  # 借阅第一本图书
+
+    # 更新统计报告
+    print("\n[更新后的统计报告]")
+    print("-" * 30)
+    manager.generate_statistics_report()
+
+    # 保存更改到文件
+    print("\n[保存数据]")
+    print("-" * 30)
+    manager.save_books()
+
+if __name__ == "__main__":
+    main()
