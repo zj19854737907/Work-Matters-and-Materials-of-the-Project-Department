@@ -1,5 +1,4 @@
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct Book {
@@ -55,4 +54,3 @@ int main() {
 
     return 0;
 }
-
