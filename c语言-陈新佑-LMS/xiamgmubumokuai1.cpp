@@ -2,62 +2,57 @@
 #include <string>
 using namespace std;
 
-// ¶¨ÒåÍ¼Êé½á¹¹Ìå
 struct Book {
-    string title;   // ÊéÃû
-    string author;  // ×÷Õß
-    string status;  // ×´Ì¬£¨ÀıÈç£ºÔÚ¿â¡¢½è³öµÈ£©
+    string title;   
+    string author;  
+    string status;  
 };
 
-const int MAX_BOOKS = 100;  // ×î´ó¿É´æ´¢µÄÍ¼ÊéÊıÁ¿
+const int MAX_BOOKS = 100;  
 
 int main() {
-    Book books[MAX_BOOKS];   // ½á¹¹ÌåÊı×é´æ´¢Í¼ÊéĞÅÏ¢
-    int count = 0;           // µ±Ç°ÒÑ´æ´¢µÄÍ¼ÊéÊıÁ¿
-    char continueInput;      // ÓÃÓÚÅĞ¶ÏÊÇ·ñ¼ÌĞøÊäÈë
+    Book books[MAX_BOOKS];   
+    int count = 0;          
+    char continueInput;    
 
-    cout << "===== Í¼ÊéĞÅÏ¢Â¼ÈëÏµÍ³ =====" << endl;
+    cout << "===== å›¾ä¹¦ä¿¡æ¯å½•å…¥ç³»ç»Ÿ =====" << endl;
 
     do {
-        // ¼ì²éÊÇ·ñÒÑ´ï×î´ó´æ´¢Á¿
         if (count >= MAX_BOOKS) {
-            cout << "¾¯¸æ£ºÒÑ´ïµ½×î´ó´æ´¢ÈİÁ¿£¨" << MAX_BOOKS << "±¾£©£¬ÎŞ·¨¼ÌĞøÂ¼Èë£¡" << endl;
+            cout << "è­¦å‘Šï¼šå·²è¾¾åˆ°æœ€å¤§å­˜å‚¨å®¹é‡ï¼ˆ" << MAX_BOOKS << "æœ¬ï¼‰ï¼Œæ— æ³•ç»§ç»­å½•å…¥ï¼" << endl;
             break;
         }
-
-        // ÊäÈëÍ¼ÊéĞÅÏ¢
-        cout << "\nÇëÊäÈëµÚ " << count + 1 << " ±¾Í¼ÊéĞÅÏ¢£º" << endl;
+        cout << "\nè¯·è¾“å…¥ç¬¬ " << count + 1 << " æœ¬å›¾ä¹¦ä¿¡æ¯ï¼š" << endl;
         
-        cin.ignore();  // Çå³ıÊäÈë»º³åÇøµÄ»»ĞĞ·û
-        cout << "ÊéÃû£º";
-        getline(cin, books[count].title);  // Ö§³Ö´ø¿Õ¸ñµÄÊéÃûÊäÈë
+        cin.ignore();  
+        cout << "ä¹¦åï¼š";
+        getline(cin, books[count].title);  
         
-        cout << "×÷Õß£º";
-        getline(cin, books[count].author); // Ö§³Ö´ø¿Õ¸ñµÄ×÷ÕßÃûÊäÈë
+        cout << "ä½œè€…ï¼š";
+        getline(cin, books[count].author); 
         
-        cout << "×´Ì¬£¨ÀıÈç£ºÔÚ¿â/½è³ö£©£º";
+        cout << "çŠ¶æ€ï¼ˆä¾‹å¦‚ï¼šåœ¨åº“/å€Ÿå‡ºï¼‰ï¼š";
         getline(cin, books[count].status);
 
-        count++;  // Í¼ÊéÊıÁ¿¼Ó1
+        count++;  
 
-        // Ñ¯ÎÊÊÇ·ñ¼ÌĞøÊäÈë
-        cout << "\nÊÇ·ñ¼ÌĞøÂ¼Èë£¿(y/n)£º";
+        cout << "\næ˜¯å¦ç»§ç»­å½•å…¥ï¼Ÿ(y/n)ï¼š";
         cin >> continueInput;
 
     } while (continueInput == 'y' || continueInput == 'Y');
 
-    // ÏÔÊ¾ÒÑÂ¼ÈëµÄÍ¼ÊéĞÅÏ¢
-    cout << "\n===== ÒÑÂ¼ÈëµÄÍ¼ÊéĞÅÏ¢ =====" << endl;
+   cout << "\n===== å·²å½•å…¥çš„å›¾ä¹¦ä¿¡æ¯ =====" << endl;
     if (count == 0) {
-        cout << "ÉĞÎ´Â¼ÈëÈÎºÎÍ¼ÊéĞÅÏ¢£¡" << endl;
+        cout << "å°šæœªå½•å…¥ä»»ä½•å›¾ä¹¦ä¿¡æ¯ï¼" << endl;
     } else {
         for (int i = 0; i < count; i++) {
-            cout << "\nµÚ " << i + 1 << " ±¾£º" << endl;
-            cout << "ÊéÃû£º" << books[i].title << endl;
-            cout << "×÷Õß£º" << books[i].author << endl;
-            cout << "×´Ì¬£º" << books[i].status << endl;
+            cout << "\nç¬¬ " << i + 1 << " æœ¬ï¼š" << endl;
+            cout << "ä¹¦åï¼š" << books[i].title << endl;
+            cout << "ä½œè€…ï¼š" << books[i].author << endl;
+            cout << "çŠ¶æ€ï¼š" << books[i].status << endl;
         }
     }
 
     return 0;
 }
+
