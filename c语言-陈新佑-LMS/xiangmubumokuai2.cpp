@@ -1,61 +1,47 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cstdio>  // ÓÃÓÚprintf()
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// Í¼Êé½á¹¹Ìå£¬´æ´¢Í¼ÊéĞÅÏ¢
 struct Book {
-    string title;       // ÊéÃû
-    string author;      // ×÷Õß
-    double price;       // ¼Û¸ñ
-    bool isAvailable;   // ×´Ì¬£ºtrue¿É½èÔÄ£¬falseÒÑ½è³ö
+    string title;       
+    string author;     
+    double price;     
+    bool isAvailable;  
 
-    // ¹¹Ôìº¯Êı
-    Book(string t, string a, double p, bool available = true)
+ Book(string t, string a, double p, bool available = true)
         : title(t), author(a), price(p), isAvailable(available) {}
 };
 
 int main() {
-    // Ê¹ÓÃvector´æ´¢Í¼Êé£¨C++98Ö§³Övector£©
+  
     vector<Book> books;
-
-    // Ìí¼ÓÊ¾ÀıÍ¼Êé
     books.push_back(Book("C++ Primer", "Stanley B. Lippman", 89.0));
-    books.push_back(Book("Êı¾İ½á¹¹ÓëËã·¨·ÖÎö", "Mark Allen Weiss", 79.5));
-    books.push_back(Book("¼ÆËã»úÍøÂç", "Andrew S. Tanenbaum", 69.0, false));
-    books.push_back(Book("Python±à³Ì£º´ÓÈëÃÅµ½Êµ¼ù", "Eric Matthes", 59.8));
-    books.push_back(Book("ÉîÈëÀí½â¼ÆËã»úÏµÍ³", "Randal E. Bryant", 128.0));
+    books.push_back(Book("æ•°æ®ç»“æ„ä¸ç®—æ³•åˆ†æ", "Mark Allen Weiss", 79.5));
+    books.push_back(Book("è®¡ç®—æœºç½‘ç»œ", "Andrew S. Tanenbaum", 69.0, false));
+    books.push_back(Book("Pythonç¼–ç¨‹ï¼šä»å…¥é—¨åˆ°å®è·µ", "Eric Matthes", 59.8));
+    books.push_back(Book("æ·±å…¥ç†è§£è®¡ç®—æœºç³»ç»Ÿ", "Randal E. Bryant", 128.0));
 
-    // ¼ì²éÊÇ·ñÓĞÍ¼Êé
+   
     if (books.empty()) {
-        printf("µ±Ç°Ã»ÓĞÍ¼ÊéĞÅÏ¢£¡\n");
+        printf("å½“å‰æ²¡æœ‰å›¾ä¹¦ä¿¡æ¯ï¼\n");
         return 0;
     }
-
-    // Êä³ö±í¸ñ±êÌâ
-    printf("\n===== Í¼Êé¹İÍ¼ÊéĞÅÏ¢ =====\n\n");
-    // Ê¹ÓÃprintf¸ñÊ½»¯×Ö·û´®ÉèÖÃÁĞ¿í
-    printf("%-30s %-20s %-10s %-10s\n", "ÊéÃû", "×÷Õß", "¼Û¸ñ(Ôª)", "×´Ì¬");
+  printf("\n===== å›¾ä¹¦é¦†å›¾ä¹¦ä¿¡æ¯ =====\n\n");
+  printf("%-30s %-20s %-10s %-10s\n", "ä¹¦å", "ä½œè€…", "ä»·æ ¼(å…ƒ)", "çŠ¶æ€");
     
-    // Êä³ö·Ö¸ôÏß
-    for (int i = 0; i < 70; ++i) {
+   for (int i = 0; i < 70; ++i) {
         printf("-");
     }
     printf("\n");
 
-    // Ê¹ÓÃforÑ­»·±éÀúÍ¼Êé£¨C++98·ç¸ñ£©
     for (int i = 0; i < books.size(); ++i) {
         const Book& book = books[i];
-        // ¸ñÊ½»¯Êä³öÃ¿ÁĞĞÅÏ¢£¬%-ns±íÊ¾×ó¶ÔÆë£¬Õ¼n¸ö×Ö·û¿í¶È
+       
         printf("%-30s %-20s %-10.2f %-10s\n",
-               book.title.c_str(),          // string×ªconst char*
+               book.title.c_str(),          // stringè½¬const char*
                book.author.c_str(),
                book.price,
-               book.isAvailable ? "¿É½èÔÄ" : "ÒÑ½è³ö");
+               book.isAvailable ? "å¯å€Ÿé˜…" : "å·²å€Ÿå‡º");
     }
     printf("\n");
-
     return 0;
 }
