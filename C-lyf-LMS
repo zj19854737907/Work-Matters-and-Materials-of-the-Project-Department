@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<string.h> 
+
+struct Book{
+	char name[100];
+	char author[50];
+	float price;
+	char status[50];
+	};
+
+int main(){
+	struct Book books[3]={
+		{"C语言程序设计", "谭浩强", 59.0, "可借阅"},
+        {"数据结构", "严蔚敏", 45.0, "已借出"},
+        {"算法导论", "CLRS", 128.0, "可借阅"}
+	};
+	
+	int bookcount=3;
+	char searchname[50];
+   
+	
+	printf("===============所有图书信息================\n");
+	printf("书名\t\t\t作者\t\t价格\t\t状态\n");
+	for (int i=0;i<bookcount;i++){
+	printf("%s\t\t%s\t\t%.2f\t\t%s\n",books[i].name,books[i].author,books[i].price,books[i].status );
+	}
+
+    
+    printf("请输入要查找的书名：");
+	scanf("%s",searchname);
+	int found=0;
+	for(int i=0; i<bookcount;i++) {
+		if(strcmp(books[i].name,searchname)==0){
+			printf("%s\t\t%s\t\t%.2f\t\t%s\n",books[i].name,books[i].author,books[i].price,books[i].status );
+			found=1;
+			break;
+			}
+	}
+		if(!found){
+			printf("没有找到。");
+	}
+	return 0;
+		
+	}
